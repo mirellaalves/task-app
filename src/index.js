@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import initialData from './initial-data';
-import Column from './column';
+import Column from './components/column';
 
 const App = () => {
   const [tasksList, settasksList] = useState(initialData);

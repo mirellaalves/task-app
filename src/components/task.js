@@ -1,0 +1,9 @@
+import './../styles/task.css';
+
+const Task = (props) => {
+    return (
+        <div className='task-container'>{props.task.content}</div>
+    );
+};
+
+export default Task;
