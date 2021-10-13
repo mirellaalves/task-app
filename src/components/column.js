@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import Task from './task';
-import './../styles/task.css';
+import './../styles/column.css';
 
 const Column = (props) => {
     return (
