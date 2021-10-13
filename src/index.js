@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { DragDropContext } from 'react-beautiful-dnd'
 import initialData from './initial-data';
 import Column from './components/column';
+import './styles/index.css';
 
 const App = () => {
 	const [tasksList, settasksList] = useState(initialData);
@@ -21,6 +22,7 @@ const App = () => {
 
 	const onDragEnd = (result) => {
 		document.body.style.color = 'inherit';
+		document.body.style.backgroundColor = 'inherit';
 		const { destination, source, draggableId } = result;
 		console.log('result:', result)
 
@@ -58,12 +60,14 @@ const App = () => {
 
 		return (
 			<DragDropContext onDragStart={onDragStart} onDragUpdate={onDragUpdate} onDragEnd={onDragEnd}>
-				{tasksList.columnOrder.map((columnId) => {
-					const column = tasksList.columns[columnId];
-					const tasks = column.taskIds.map(taskId => tasksList.tasks[taskId]);
+				<div className='container'>
+					{tasksList.columnOrder.map((columnId) => {
+						const column = tasksList.columns[columnId];
+						const tasks = column.taskIds.map(taskId => tasksList.tasks[taskId]);
 
-					return <Column key={column.id} column={column} tasks={tasks} />;
-				})}
+						return <Column key={column.id} column={column} tasks={tasks} />;
+					})}
+				</div>
 			</DragDropContext>
 		)
 }
