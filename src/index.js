@@ -7,7 +7,20 @@ import Column from './components/column';
 const App = () => {
 	const [tasksList, settasksList] = useState(initialData);
 
+	const onDragStart = () => {
+		document.body.style.color = 'orange';
+	}
+
+	const onDragUpdate = (update) => {
+		const { destination } = update;
+		const opacity = destination 
+		  ? destination.index /Object.keys(tasksList.tasks).length
+		  : 0;
+		document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`
+	}
+
 	const onDragEnd = (result) => {
+		document.body.style.color = 'inherit';
 		const { destination, source, draggableId } = result;
 		console.log('result:', result)
 
@@ -44,7 +57,7 @@ const App = () => {
 	}
 
 		return (
-			<DragDropContext onDragEnd={onDragEnd}>
+			<DragDropContext onDragStart={onDragStart} onDragUpdate={onDragUpdate} onDragEnd={onDragEnd}>
 				{tasksList.columnOrder.map((columnId) => {
 					const column = tasksList.columns[columnId];
 					const tasks = column.taskIds.map(taskId => tasksList.tasks[taskId]);
