@@ -8,8 +8,13 @@ const Column = (props) => {
         <div className='column-container'>
             <h3 className='title'>{props.column.title}</h3>
             <Droppable droppableId={props.column.id}>
-                {provided =>
-                    <div className='task=list' {...provided.droppableProps} ref={provided.innerRef}>
+                {(provided, snapshot) =>
+                    <div
+                        className='task-list'
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        isdraggingover={snapshot.isdraggingover}
+                    >
                         {props.tasks.map((task, index) => <Task key={task.id} task={task} index={index}/>)}
                         {provided.placeholder}
                     </div>

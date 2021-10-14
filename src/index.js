@@ -10,7 +10,6 @@ const App = () => {
 
 	const onDragEnd = (result) => {
 		const { destination, source, draggableId } = result;
-		console.log('result:', result)
 
 		if (!destination) {
 			return;
@@ -23,25 +22,56 @@ const App = () => {
 			return;
 		}
 
-		const column = tasksList.columns[source.droppableId];
-		const newTaskIds = Array.from(column.taskIds);
-		newTaskIds.splice(source.index, 1);
-		newTaskIds.splice(destination.index, 0, draggableId);
+		const start = tasksList.columns[source.droppableId];
+		const finish = tasksList.columns[destination.droppableId];
 
-		const newColumn = {
-			...column,
-			taskIds: newTaskIds,
+		if (start === finish) {
+			const newTaskIds = Array.from(start.taskIds);
+			newTaskIds.splice(source.index, 1);
+			newTaskIds.splice(destination.index, 0, draggableId);
+
+			const newColumn = {
+				...finish,
+				taskIds: newTaskIds,
+			}
+
+			const newState = {
+				...tasksList,
+				columns: {
+					...tasksList.columns,
+					[newColumn.id]: newColumn,
+				},
+			}
+
+			return settasksList(newState);
 		}
 
-		const newListState = {
+		const startTaskIds = Array.from(start.taskIds);
+		startTaskIds.splice(source.index, 1);
+
+		const newStart = {
+			...start,
+			taskIds: startTaskIds,
+		};
+
+		const finishTaskIds = Array.from(finish.taskIds);
+		finishTaskIds.splice(destination.index, 0, draggableId);
+
+		const newFinish = {
+			...finish,
+			taskIds: finishTaskIds,
+		};
+
+		const newState = {
 			...tasksList,
 			columns: {
 				...tasksList.columns,
-				[newColumn.id]: newColumn,
+				[newStart.id]: newStart,
+				[newFinish.id]: newFinish,
 			},
-		}
+		};
 
-		return settasksList(newListState);
+		return settasksList(newState);
 	}
 
 		return (
