@@ -75,16 +75,21 @@ const App = () => {
 	}
 
 		return (
-			<DragDropContext onDragEnd={onDragEnd}>
-				<div className='container'>
-					{tasksList.columnOrder.map((columnId) => {
-						const column = tasksList.columns[columnId];
-						const tasks = column.taskIds.map(taskId => tasksList.tasks[taskId]);
+			<div>
+				<button onClick={() => settasksList(initialData)}>
+					Reset
+				</button>
+				<DragDropContext onDragEnd={onDragEnd}>
+					<div className='container'>
+						{tasksList.columnOrder.map((columnId) => {
+							const column = tasksList.columns[columnId];
+							const tasks = column.taskIds.map(taskId => tasksList.tasks[taskId]);
 
-						return <Column key={column.id} column={column} tasks={tasks} />;
-					})}
-				</div>
-			</DragDropContext>
+							return <Column key={column.id} column={column} tasks={tasks} />;
+						})}
+					</div>
+				</DragDropContext>
+			</div>
 		)
 }
 
